@@ -1,5 +1,7 @@
 package login.dto;
 
+import java.util.Date;
+
 public class MemberDTO {
 	
 	private String memberId;
@@ -16,7 +18,7 @@ public class MemberDTO {
 	private String roadAddress;
 	private String jibunAddress;
 	private String namujiAddress;
-	private String joinDt;
+	private Date joinDt;
 	
 	
 	public String getMemberId() {
@@ -103,10 +105,10 @@ public class MemberDTO {
 	public void setNamujiAddress(String namujiAddress) {
 		this.namujiAddress = namujiAddress;
 	}
-	public String getJoinDt() {
+	public Date getJoinDt() {
 		return joinDt;
 	}
-	public void setJoinDt(String joinDt) {
+	public void setJoinDt(Date joinDt) {
 		this.joinDt = joinDt;
 	}
 	
