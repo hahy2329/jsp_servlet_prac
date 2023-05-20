@@ -97,6 +97,13 @@
 				</tr>
 				
 			</c:forEach>
+			<tr align="right">
+				<td colspan="5">
+					<input type="button" value="글쓰기" onclick="location.href='boardWrite'">
+				
+				</td>
+			
+			</tr>
 			<tr>
 				<td colspan="5" align="center">
 					<select id="searchKeyword">
