@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,6 +47,34 @@
 				</td>
 			</tr>
 			
+	
+	</table>
+	
+	<br>
+	<hr>
+	<br>
+	
+	
+	<h4>댓글 리스트</h4>
+	<table style="width:700px;" border="1">
+		<c:forEach var="replyDTO" items="${replyList }">
+			<tr>
+				<td>
+					작성자 : ${replyDTO.writer } / 작성일 : ${replyDTO.enrollDt } <br>
+					${replyDTO.content }
+					<input type="button" value="수정" onclick="location.href='replyUpdate?replyId=${replyDTO.replyId}'">
+					<input type="button" value="삭제" onclick="location.href='replyDelete?replyId=${replyDTO.replyId}'">
+					
+				</td>
+			
+			</tr>
+		
+		</c:forEach>
+		<tr>
+			<td align="right">
+				<input type="button" value="댓글작성" onclick="location.href='replyWrite?boardId=${mainBoardDTO.boardId}'">
+			</td>
+		</tr>
 	
 	</table>
 	

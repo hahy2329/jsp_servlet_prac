@@ -414,6 +414,59 @@ public class BoardAdvanceDAO {
 			}
 			
 		}
+		public void insertReply(ReplyDTO replyDTO) {
+			
+			try {
+				getConnection();
+				
+				pstmt = conn.prepareStatement("INSERT INTO REPLY_BOARD(WRITER, CONTENT, PASSWD, BOARD_ID) VALUES(?,?,?,?)");
+				pstmt.setString(1, replyDTO.getWriter());
+				pstmt.setString(2, replyDTO.getContent());
+				pstmt.setString(3, replyDTO.getPasswd());
+				pstmt.setLong(4, replyDTO.getBoardId());
+				pstmt.executeUpdate();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				getClose();
+			}
+			
+			
+		}
+		
+		
+		public ReplyDTO getReplyDetail(long replyId) {
+			
+			
+			ReplyDTO replyDTO = new ReplyDTO();
+			try {
+				getConnection();
+				
+				pstmt = conn.prepareStatement("SELECT * FROM REPLY_BOARD WHERE REPLY_ID = ?");
+				pstmt.setLong(1, replyId);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					
+					replyDTO.setReplyId(rs.getLong("REPLY_ID"));
+					replyDTO.setWriter(rs.getString("WRITER"));
+					replyDTO.setPasswd(rs.getString("PASSWD"));
+					replyDTO.setEnrollDt(rs.getDate("ENROLL_DT"));
+					replyDTO.setContent(rs.getString("CONTENT"));
+					replyDTO.setBoardId(rs.getLong("BOARD_ID"));
+					
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				getClose();
+			}
+			
+			return replyDTO;
+			
+		}
+		
+		
 		
 
 	
