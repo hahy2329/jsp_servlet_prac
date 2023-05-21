@@ -279,19 +279,20 @@ public class BoardAdvanceDAO {
 			ArrayList<ReplyDTO> replyList = new ArrayList<ReplyDTO>();
 			
 			try {
+
 				getConnection();
-				
-				String sql = "SELECT FROM REPLY_BOARD R";
-				sql +="JOIN MAIN_BOARD M";
-				sql +="ON M.BOARD_ID = R.BOARD_ID";
-				sql +="AND R.BOARD_ID = ?";
-				sql +="ORDER BY R.ENROLL_DT DESC";
+
+				String sql = "SELECT R.* FROM REPLY_BOARD R ";
+					   sql += "JOIN MAIN_BOARD M ";
+					   sql += "ON M.BOARD_ID = R.BOARD_ID ";
+					   sql += "AND R.BOARD_ID = ? ";
+					   sql += "ORDER BY R.ENROLL_DT DESC";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setLong(1, boardId);
 				rs = pstmt.executeQuery();
 				
-				while(rs.next()) {
+				while (rs.next()) {
 					
 					ReplyDTO replyDTO = new ReplyDTO();
 					replyDTO.setReplyId(rs.getLong("REPLY_ID"));
@@ -301,15 +302,18 @@ public class BoardAdvanceDAO {
 					replyDTO.setEnrollDt(rs.getDate("ENROLL_DT"));
 					replyDTO.setBoardId(rs.getLong("BOARD_ID"));
 					replyList.add(replyDTO);
+					
 				}
 				
-			}catch(Exception e) {
+				
+			} catch (Exception e) {
 				e.printStackTrace();
-			}finally {
+			} finally {
 				getClose();
 			}
 			
 			return replyList;
+
 		}
 		
 		
@@ -466,7 +470,54 @@ public class BoardAdvanceDAO {
 			
 		}
 		
+		public boolean checkValidMember(ReplyDTO replyDTO) {
+			
+			boolean isCheck = false;
+			
+			try {
+				getConnection();
+				
+				pstmt = conn.prepareStatement("SELECT * FROM REPLY_BOARD WHERE REPLY_ID=? AND PASSWD=?");
+				pstmt.setLong(1, replyDTO.getReplyId() );
+				pstmt.setString(2, replyDTO.getPasswd());
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					isCheck = true;
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				getClose();
+			}
+			
+			return isCheck;
+		}
 		
+		public boolean deleteReply(ReplyDTO replyDTO) {
+			boolean isDelete = false;
+			
+			try {
+				
+				if(checkValidMember(replyDTO)) {
+					getConnection();
+					pstmt = conn.prepareStatement("DELETE FROM REPLY_BOARD WHERE REPLY_ID = ?");
+					pstmt.setLong(1, replyDTO.getReplyId());
+					pstmt.executeUpdate();
+					isDelete = true;
+					
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				
+			}finally {
+				getClose();
+			}
+			
+			return isDelete;
+			
+		}
 		
 
 	

@@ -24,7 +24,7 @@
 				</tr>
 				<tr>
 					<td>작성일</td>
-					<td>${mainBoardDTO.enrollDT }</td>
+					<td>${mainBoardDTO.enrollDt }</td>
 				</tr>
 				<tr>
 					<td>제목</td>
